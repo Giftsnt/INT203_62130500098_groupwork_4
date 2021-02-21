@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Vue Js - HelloWorld App</title>
+
+  <!-- https://google.github.io/material-design-icons/#icon-font-for-the-web -->
+  <!-- Using via Google Web Fonts -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+  <!-- https://tailwindcss.com/docs/installation -->
+  <!-- Using Tailwind via CDN -->
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+
+  <!-- https://v3.vuejs.org/guide/installation.html#release-notes -->
+  <!-- Vue CDN -->
+  <script src="https://unpkg.com/vue@next"></script>
+
+  <script rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script rel="stylesheet" src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+</head>
+
+<body>
+  <div id="app" class="flex justify-center bg-gray-200">
+    <div class="page-content page-container" id="page-content">
+      <div class="row container d-flex justify-content-center">
+        <div class="card-body">
+          <h4 class="card-title">Photo Gallery {{ countdone }}</h4>
+
+          <!-- icon search -->
+          <div class="searchForm" v-if="isHidden == true">
+            <button v-on:click="isHidden = !isHidden" :class="{show: isHidden == false}"><span class="material-icons">search</span></button>
+          </div>
+          <div class="searchForm" v-if="isHidden == false">
+            <input class="ml-2 p-1 w-44 placeholder-gray-500 placeholder-opacity-50 focus:outline-none text-black rounded-sm" type="text" placeholder="Please enter text for searching photos" v-model="searchText">
+            <button class="ml-2 p-1 rounded-sm focus:outline-none bg-blue-500" v-on:click="isHidden = !isHidden">Cancel</button>
+          </div>
+
+          <div v-if="modal" class="flex items-center animated fadeIn fixed z-50 overflow-auto bg-smoke-dark inset-0">
+            <div
+                class="animated fadeInUp fixed shadow-inner max-w-md md:relative pin-b pin-x align-top m-auto justify-end  p-8 bg-white  w-full  flex flex-col">
+                <img class="my-auto " :src="imageModal" alt="">
+                <div class="inline-flex justify-center">
+                    <button @click="toggleModal"
+                        class="bg-grey-lighter flex-1 border-2 md:flex-none border-red-300 ml-2 hover:bg-green-lightest text-grey-400 font-medium py-3 px-3 rounded">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+
+          <!-- picture -->
+          <div v-if="searching.length !== 0" v-for="(task,index) in searching" class="inline">
+            <div>
+              <img v-bind:src="task.url" @click="toggleDone(task.no)" class="h-56 l-56 my-3 ">
+            </div>
+            <div class="align-middle flex justify-center">
+              <span v-show="task.done" class="material-icons text-red-600 ml-3" @click="toggleDone(task.no)">favorite</span>
+              <p class="font-semibold"> {{ task.type }} </p>
+            </div>
+          </div>
+          <div v-else class="mt-10 bg-white shadow-lg rounded w-full mx-auto px-auto py-5 flex justify-center">
+            <h2 class="mb-2 text-2xl font-bold text-gray-800">No Photos.</h2>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- my main.js -->
+  <script src="./main.js"></script>
+</body>
+
+</html>
+
+<!--class="card"-->
